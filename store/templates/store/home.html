@@ -1,55 +1,80 @@
 {% extends 'store/base.html' %}
 {% block content %}
-<div class="row">
-    <!-- Categories Sidebar -->
-    <div class="col-md-3">
-        <div class="list-group">
-            <h5 class="mb-3">Categories</h5>
+<div class="container">
+    <!-- Featured Categories -->
+    <div class="mb-5">
+        <h2 class="section-title">Our Categories</h2>
+        <div class="row g-4">
             {% for category in categories %}
-            <a href="#" class="list-group-item list-group-item-action">
-                {{ category.name }}
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Products -->
-    <div class="col-md-9">
-        <div class="row">
-            {% for product in products %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card product-card h-100">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+            <div class="col-md-3">
+                <div class="card category-card h-100 text-center p-4">
                     <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">₹{{ product.price }}</p>
-                        <form class="add-to-cart-form">
-                            <div class="input-group mb-3">
-                                <input type="number" class="form-control" value="1" min="1">
-                                <button 
-                                    class="btn btn-success" 
-                                    type="button"
-                                    data-product-id="{{ product.id }}"
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </form>
+                        <h5 class="card-title">{{ category.name }}</h5>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-</div>
 
-<script>
-document.querySelectorAll('.add-to-cart-form button').forEach(button => {
-    button.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-        const quantity = this.parentElement.querySelector('input').value;
-        window.location.href = `/add-to-cart/${productId}/?quantity=${quantity}`;
-    });
-});
-</script>
+    <!-- Products Section -->
+    <div class="mb-5">
+        <h2 class="section-title">Fresh Products</h2>
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card product-card h-100">
+                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-success fw-bold">₹{{ product.price }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="input-group" style="max-width: 120px;">
+                                <input type="number" class="form-control" value="1" min="1">
+                            </div>
+                            <button 
+                                class="btn btn-success add-to-cart-btn"
+                                data-product-id="{{ product.id }}"
+                            >
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Customer Reviews -->
+    <div class="mb-5">
+        <h2 class="section-title">Customer Reviews</h2>
+        <div class="row g-4">
+            {% for review in reviews %}
+            <div class="col-md-4">
+                <div class="card review-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="user-avatar me-3">
+                                {{ review.user.username|first|upper }}
+                            </div>
+                            <div>
+                                <h6 class="mb-0">{{ review.user.username }}</h6>
+                                <small class="text-muted">{{ review.created_at|date:"M d, Y" }}</small>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ review.content }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    No reviews yet. Be the first to review our products!
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}

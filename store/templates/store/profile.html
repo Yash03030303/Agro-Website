@@ -1,0 +1,76 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-success text-white py-4">
+                    <div class="d-flex justify-content-center">
+                        <div class="user-avatar-lg mb-3">
+                            {{ user.username|first|upper }}
+                        </div>
+                    </div>
+                    <h3 class="text-center mb-0">{{ user.username }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="text-muted">Member since {{ user.date_joined|date:"M Y" }}</p>
+                    <hr>
+                    <h5 class="text-success"><i class="fas fa-shopping-cart me-2"></i>Orders</h5>
+                    <h2 class="text-dark">{{ order_history.count }}</h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-light py-3">
+                    <h4 class="mb-0"><i class="fas fa-history me-2"></i>Order History</h4>
+                </div>
+                <div class="card-body">
+                    {% if order_history %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order_history %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ item.product.image.url }}" 
+                                                 alt="{{ item.product.name }}" 
+                                                 class="img-thumbnail me-3"
+                                                 style="width: 60px; height: 60px; object-fit: cover;">
+                                            <span>{{ item.product.name }}</span>
+                                        </div>
+                                    </td>
+                                    <td>₹{{ item.product.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>₹{{ item.total_price }}</td>
+                                    <td>{{ item.added_at|date:"M d, Y" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Order History</h4>
+                        <p>Your purchased items will appear here</p>
+                        <a href="{% url 'home' %}" class="btn btn-success mt-2">Shop Now</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
