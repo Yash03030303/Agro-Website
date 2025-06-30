@@ -1,16 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Product, Category, CartItem, ScrollingText
-from django.shortcuts import get_object_or_404
+from .models import Product, Category, CartItem, ScrollingText, Review
 
 def home(request):
     categories = Category.objects.all()
     products = Product.objects.all()
+    reviews = Review.objects.all().order_by('-created_at')[:5]  # Latest 5 reviews
     return render(request, 'store/home.html', {
         'categories': categories,
-        'products': products
+        'products': products,
+        'reviews': reviews
     })
 
 @login_required
@@ -74,3 +75,11 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'store/login.html', {'form': form})
+
+@login_required
+def profile(request):
+    # Get user's order history (cart items that have been purchased)
+    order_history = CartItem.objects.filter(user=request.user).order_by('-added_at')
+    return render(request, 'store/profile.html', {
+        'order_history': order_history
+    })

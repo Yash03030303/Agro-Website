@@ -24,6 +24,10 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
+    
+    @property
+    def total_price(self):
+        return self.product.price * self.quantity
 
 class ScrollingText(models.Model):
     text = models.CharField(max_length=200)
@@ -31,3 +35,11 @@ class ScrollingText(models.Model):
     
     def __str__(self):
         return self.text[:50] + "..." if len(self.text) > 50 else self.text
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Review by {self.user.username}"
