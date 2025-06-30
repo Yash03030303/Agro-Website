@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Media and static files
+/media
+/staticfiles
+/static_root
+/media_root
+
+# Django migrations
+**/migrations/
+!*/migrations/__init__.py
+
+# Environment variables
+.env
+.env.*
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# MyPy
+.mypy_cache/
+
+# Pipenv
+Pipfile.lock
+
+# Others
+*.sqlite3
+*.log
+*.bak
+*.swp
+*.tmp

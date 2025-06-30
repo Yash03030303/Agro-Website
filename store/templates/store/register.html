@@ -1,0 +1,265 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg overflow-hidden animate__animated animate__fadeInUp">
+                <!-- Card Header with Gradient Background -->
+                <div class="card-header bg-gradient-success text-white py-4">
+                    <div class="d-flex justify-content-center">
+                        <h3 class="mb-0 animate__animated animate__fadeInDown">Create Your Account</h3>
+                    </div>
+                </div>
+                
+                <!-- Card Body -->
+                <div class="card-body p-5">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="id_username" class="form-label text-success fw-bold">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <input type="text" 
+                                       name="username" 
+                                       id="id_username" 
+                                       class="form-control form-control-lg border-success border-2 rounded-end {% if form.username.errors %}is-invalid{% endif %}" 
+                                       required
+                                       placeholder="Choose a username">
+                            </div>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.username.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="id_password1" class="form-label text-success fw-bold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" 
+                                       name="password1" 
+                                       id="id_password1" 
+                                       class="form-control form-control-lg border-success border-2 rounded-end {% if form.password1.errors %}is-invalid{% endif %}" 
+                                       required
+                                       placeholder="Create your password">
+                            </div>
+                            {% if form.password1.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.password1.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Password Confirmation -->
+                        <div class="mb-4">
+                            <label for="id_password2" class="form-label text-success fw-bold">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password" 
+                                       name="password2" 
+                                       id="id_password2" 
+                                       class="form-control form-control-lg border-success border-2 rounded-end {% if form.password2.errors %}is-invalid{% endif %}" 
+                                       required
+                                       placeholder="Confirm your password">
+                            </div>
+                            {% if form.password2.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.password2.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-success btn-lg rounded-pill py-3 fw-bold shadow-sm register-btn">
+                                <span class="position-relative">
+                                    Register Now
+                                    <i class="fas fa-arrow-right ms-2"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Login Link -->
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Already have an account? 
+                            <a href="{% url 'login' %}" class="text-success fw-bold text-decoration-none hover-underline">
+                                Login here
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom Styles */
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    }
+    
+    .card {
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(46, 204, 113, 0.2) !important;
+    }
+    
+    .input-group-text {
+        transition: all 0.3s ease;
+    }
+    
+    .input-group:focus-within .input-group-text {
+        background-color: #27ae60;
+        transform: scale(1.05);
+    }
+    
+    .form-control:focus {
+        border-color: #2ecc71;
+        box-shadow: 0 0 0 0.25rem rgba(46, 204, 113, 0.25);
+    }
+    
+    .hover-underline {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .hover-underline::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #2ecc71;
+        transition: width 0.3s ease;
+    }
+    
+    .hover-underline:hover::after {
+        width: 100%;
+    }
+    
+    .register-btn {
+        background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        border: none;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .register-btn:hover {
+        background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+    }
+    
+    .register-btn:active {
+        transform: translateY(0) scale(1);
+    }
+    
+    .register-btn i {
+        transition: transform 0.3s ease;
+    }
+    
+    .register-btn:hover i {
+        transform: translateX(5px);
+    }
+    
+    .animate__animated {
+        animation-duration: 0.8s;
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .card-header {
+        animation: float 4s ease-in-out infinite;
+    }
+    
+    .card-body {
+        background: linear-gradient(to bottom right, #f8fff9, #ffffff);
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<script>
+    // Add animation to form elements when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('.form-control');
+        
+        inputs.forEach((input, index) => {
+            input.style.opacity = '0';
+            input.style.transform = 'translateY(20px)';
+            input.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            
+            setTimeout(() => {
+                input.style.opacity = '1';
+                input.style.transform = 'translateY(0)';
+            }, 100);
+        });
+        
+        // Button hover effect
+        const btn = document.querySelector('.register-btn');
+        btn.addEventListener('mouseenter', () => {
+            btn.querySelector('.fa-arrow-right').classList.add('animate__tada');
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.querySelector('.fa-arrow-right').classList.remove('animate__tada');
+        });
+        
+        // Form validation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            let valid = true;
+            
+            // Check if passwords match
+            const password1 = document.getElementById('id_password1').value;
+            const password2 = document.getElementById('id_password2').value;
+            
+            if (password1 !== password2) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger mt-3';
+                errorDiv.textContent = "Passwords don't match.";
+                
+                const existingError = document.querySelector('.password-error');
+                if (!existingError) {
+                    errorDiv.classList.add('password-error');
+                    form.querySelector('.d-grid').before(errorDiv);
+                }
+                valid = false;
+            }
+            
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}
