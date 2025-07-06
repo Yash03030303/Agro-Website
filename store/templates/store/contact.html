@@ -1,0 +1,82 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-success text-white py-4">
+                    <h2 class="text-center mb-0">Contact SWANANDI AGRO, SATARA</h2>
+                </div>
+                <div class="card-body p-5">
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <div class="contact-info p-4 border rounded">
+                                <h4 class="text-success mb-4">Contact Information</h4>
+                                <p><i class="fas fa-clock text-success me-2"></i> Monday to Saturday: 10am to 6pm</p>
+                                <p><i class="fas fa-envelope text-success me-2"></i> ykdere63@gmail.com</p>
+                                <p><i class="fas fa-phone text-success me-2"></i> Manoj Gole: 9766354774</p>
+                                <hr>
+                                <p class="small text-muted">
+                                    By contacting us, you authorize Swanandi AGRO and its representatives to Call, SMS, 
+                                    Email or WhatsApp you about its products and offers. This consent overrides any 
+                                    registration for DNC / NDNC.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="map-container border rounded overflow-hidden">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15259.077474066862!2d73.98973526041993!3d17.01152790000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1c065e99d5aab%3A0x6a0f0b4c6c1e5f2!2sSatara%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1657542345678!5m2!1sen!2sin" 
+                                    width="100%" 
+                                    height="100%" 
+                                    style="border:0; min-height: 250px;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form bg-light p-4 rounded">
+                        <h4 class="text-success mb-4">Send us a Message</h4>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-success fw-bold">Name</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-success fw-bold">Email *</label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-success fw-bold">Phone number</label>
+                                {{ form.phone }}
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label text-success fw-bold">Comment</label>
+                                {{ form.comment }}
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg py-3 fw-bold">
+                                    Send Message <i class="fas fa-paper-plane ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="mt-4 text-center small text-muted">
+                        <p>
+                            This site is protected by reCAPTCHA and the Google 
+                            <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and 
+                            <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriCart - Farm Fresh Products</title>
+    <title>Swanandi Agro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -170,6 +170,13 @@
                                 {{ user.username|first|upper }}
                             </div>
                         </a>
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                            </li>
+                        </ul>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <li><span class="dropdown-item fw-bold">Hi, {{ user.username }}</span></li>
                             <li><hr class="dropdown-divider"></li>
@@ -216,5 +223,68 @@
             });
         });
     </script>
+
+    <!-- Add this at the end of the body tag -->
+    <a href="https://wa.me/919867529917" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with us</span>
+    </a>
+
+<style>
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #25D366;
+        color: white;
+        border-radius: 50px;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        transform: translateY(0);
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .whatsapp-float:hover {
+        background: #128C7E;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-float i {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    @media (max-width: 768px) {
+        .whatsapp-float {
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        
+        .whatsapp-float i {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        
+        .whatsapp-float span {
+            display: none;
+        }
+    }
+</style>
 </body>
 </html>

@@ -1,0 +1,77 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+        </ol>
+    </nav>
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title mb-0">{{ category.name }}</h2>
+        <div class="d-flex">
+            <div class="dropdown me-2">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                    <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                    <li><a class="dropdown-item" href="#">Newest First</a></li>
+                </ul>
+            </div>
+            <a href="{% url 'home' %}" class="btn btn-success">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card product-card h-100">
+                <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-success fw-bold">₹{{ product.price }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="input-group" style="max-width: 120px;">
+                            <input type="number" class="form-control" value="1" min="1">
+                        </div>
+                        <button 
+                            class="btn btn-success add-to-cart-btn"
+                            data-product-id="{{ product.id }}"
+                        >
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                No products available in this category.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if products %}
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

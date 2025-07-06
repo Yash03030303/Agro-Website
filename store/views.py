@@ -2,16 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Product, Category, CartItem, ScrollingText, Review
+from .models import Product, Category, CartItem, ScrollingText, Review, HomePoster
+from .forms import ContactForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 def home(request):
     categories = Category.objects.all()
-    products = Product.objects.all()
-    reviews = Review.objects.all().order_by('-created_at')[:5]  # Latest 5 reviews
+    products = Product.objects.all()[:8]  # Show only 8 products on home
+    reviews = Review.objects.all().order_by('-created_at')[:5]
+    posters = HomePoster.objects.filter(is_active=True)
     return render(request, 'store/home.html', {
         'categories': categories,
         'products': products,
-        'reviews': reviews
+        'reviews': reviews,
+        'posters': posters
     })
 
 @login_required
@@ -82,4 +87,39 @@ def profile(request):
     order_history = CartItem.objects.filter(user=request.user).order_by('-added_at')
     return render(request, 'store/profile.html', {
         'order_history': order_history
+    })
+
+# Add new view for contact page
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Send email
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            comment = form.cleaned_data['comment']
+            
+            message = f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\nMessage:\n{comment}"
+            
+            send_mail(
+                'New Contact Form Submission - SWANANDI AGRO',
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                ['ykdere63@gmail.com'],
+                fail_silently=False,
+            )
+            
+            return render(request, 'store/contact_success.html')
+    else:
+        form = ContactForm()
+    
+    return render(request, 'store/contact.html', {'form': form})
+
+def category_products(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    products = Product.objects.filter(category=category)
+    return render(request, 'store/category_products.html', {
+        'category': category,
+        'products': products
     })
