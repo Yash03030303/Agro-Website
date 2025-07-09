@@ -116,6 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # For development
+#STATIC_ROOT = BASE_DIR / 'staticfiles'    # For production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -141,3 +143,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ykdere63@gmail.com'  # Your email
 EMAIL_HOST_PASSWORD = 'your-email-password'  # Your email password
 DEFAULT_FROM_EMAIL = 'your-email@gmail.com'  # Your email
+
+# Add to the bottom
+RAZORPAY_API_KEY = 'rzp_test_8SzGPe1gqBu2zd'
+RAZORPAY_API_SECRET = 'OTpGp2UymK2Zd1SvaHnm5c2Y'

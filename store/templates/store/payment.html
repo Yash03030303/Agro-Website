@@ -1,0 +1,70 @@
+{% extends 'store/base.html' %}
+{% load static %}  <!-- Add this line at the top -->
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-header bg-success text-white py-3">
+                    <h3 class="mb-0">Complete Your Payment</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h4 class="text-success">Order #{{ order.id }}</h4>
+                        <h5 class="mb-0">Total Amount: ₹{{ total }}</h5>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        You'll be redirected to Razorpay secure payment page
+                    </div>
+                    
+                    <form action="{{ callback_url }}" method="POST" id="payment-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                        <input type="hidden" name="razorpay_order_id" value="{{ razorpay_order_id }}">
+                        <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+                    </form>
+                    
+                    <button id="pay-button" class="btn btn-success btn-lg w-100 py-3 fw-bold">
+                        Pay ₹{{ total }} Now <i class="fas fa-lock ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.getElementById('pay-button').onclick = function(e) {
+        var options = {
+            "key": "{{ razorpay_merchant_key }}",
+            "amount": "{{ razorpay_amount }}",
+            "currency": "{{ currency }}",
+            "name": "Swanandi AGRO",
+            "description": "Order #{{ order.id }}",
+            "image": "{% static 'img/logo.png' %}",  <!-- Now this will work -->
+            "order_id": "{{ razorpay_order_id }}",
+            "handler": function(response) {
+                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                document.getElementById('razorpay_signature').value = response.razorpay_signature;
+                document.getElementById('payment-form').submit();
+            },
+            "prefill": {
+                "name": "{{ order.first_name }} {{ order.last_name }}",
+                "email": "{{ order.email }}",
+                "contact": "{{ order.phone }}"
+            },
+            "theme": {
+                "color": "#4CAF50"
+            }
+        };
+        
+        var rzp = new Razorpay(options);
+        rzp.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock %}
